@@ -7,30 +7,51 @@ import ListBooks from './ListBooks'
 
 class BooksApp extends React.Component {
   state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    showSearchPage: true
+      searchResults: [],
+      books: []
+  }
+
+  componentDidMount() {
+    BooksAPI.getAll().then((books) => {
+      this.setState({books})
+    })
   }
 
   queryForBooks = (query) => {
     //make api call here
     if (query) {
-      console.log("received query from search component", query)
+      BooksAPI.search(query, 10).then(searchResults => {
+        if(searchResults.error) {
+          searchResults = []
+        }
+        this.setState({searchResults})
+      })
     }
+  }
+
+  onUpdateBook = (book, moveToCategory) => {
+    console.log("updating....", book.title , moveToCategory)
+    BooksAPI.update(book, moveToCategory).then(() => {
+      book.shelf = moveToCategory
+      this.setState(state => ({
+        books: state.books.filter(b => b.id !== book.id).concat([book])
+      }))
+    })
   }
 
   render() {
     return (
       <div className="app">
         <Route exact path="/" render={() => (
-          <ListBooks />
+          <ListBooks
+            books={this.state.books}
+            onUpdateBook={this.onUpdateBook}/>
         )}/>
       <Route path="/search" render={() => (
-          <SearchBookList onQuery={this.queryForBooks} />
+          <SearchBookList
+            searchResults={this.state.searchResults}
+            onQuery={this.queryForBooks}
+            onUpdateBook={this.onUpdateBook} />
         )}/>
       </div>
     )
