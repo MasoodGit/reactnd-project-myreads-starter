@@ -8,6 +8,11 @@ class SearchBookList extends React.Component {
     query: ""
   }
 
+  componentWillUnmount() {
+    console.log("SearchBookList unmounting......now");
+    this.props.onUnmount()
+  }
+
   searchForBooks = (evt) => {
     if ( evt.key === 'Enter') {
       if(this.state.query) {
@@ -18,10 +23,6 @@ class SearchBookList extends React.Component {
 
   updateQuery = (query) => {
     this.setState({ query: query.trim()})
-  }
-
-  clearQuery = () => {
-    this.setState(this.setState({ query: ""}))
   }
 
   render() {

@@ -39,6 +39,11 @@ class BooksApp extends React.Component {
     })
   }
 
+  clearSearchResults = () => {
+    const searchResults = []
+    this.setState({searchResults})
+  }
+
   render() {
     return (
       <div className="app">
@@ -51,7 +56,8 @@ class BooksApp extends React.Component {
           <SearchBookList
             searchResults={this.state.searchResults}
             onQuery={this.queryForBooks}
-            onUpdateBook={this.onUpdateBook} />
+            onUpdateBook={this.onUpdateBook}
+            onUnmount={this.clearSearchResults} />
         )}/>
       </div>
     )
