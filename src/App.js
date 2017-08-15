@@ -7,7 +7,6 @@ import ListBooks from './ListBooks'
 
 class BooksApp extends React.Component {
   state = {
-      searchResults: [],
       books: []
   }
 
@@ -15,18 +14,6 @@ class BooksApp extends React.Component {
     BooksAPI.getAll().then((books) => {
       this.setState({books})
     })
-  }
-
-  queryForBooks = (query) => {
-    //make api call here
-    if (query) {
-      BooksAPI.search(query, 10).then(searchResults => {
-        if(searchResults.error) {
-          searchResults = []
-        }
-        this.setState({searchResults})
-      })
-    }
   }
 
   onUpdateBook = (book, moveToCategory) => {
@@ -39,11 +26,6 @@ class BooksApp extends React.Component {
     })
   }
 
-  clearSearchResults = () => {
-    const searchResults = []
-    this.setState({searchResults})
-  }
-
   render() {
     return (
       <div className="app">
@@ -54,10 +36,10 @@ class BooksApp extends React.Component {
         )}/>
       <Route path="/search" render={() => (
           <SearchBookList
-            searchResults={this.state.searchResults}
             onQuery={this.queryForBooks}
             onUpdateBook={this.onUpdateBook}
-            onUnmount={this.clearSearchResults} />
+            myBooks={this.state.books}
+            />
         )}/>
       </div>
     )
