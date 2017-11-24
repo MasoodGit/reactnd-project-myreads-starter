@@ -49,7 +49,6 @@ class SearchBookList extends React.Component {
       } else {
         this.setState({ searchResults });
       }
-      console.log(`${this.state.query} and ${this.state.searchResults.length}`);
     });
 };
 
