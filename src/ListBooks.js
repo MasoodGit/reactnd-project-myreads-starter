@@ -1,8 +1,9 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import BookShelf from './BookShelf.component'
+import PropTypes from 'prop-types'
 
-function ListBooks (props) {
+const ListBooks = (props) => {
     const categories = ["currentlyReading", "wantToRead", "read"]
     const categoryNames = ["Currently Reading", "Want To Read", "Read"]
 
@@ -31,5 +32,10 @@ function ListBooks (props) {
       </div>
     ) //end of return statement
 } //end of function
+
+ListBooks.propTypes = {
+  books: PropTypes.array.isRequired,
+  onUpdateBook: PropTypes.func.isRequired
+}
 
 export default ListBooks

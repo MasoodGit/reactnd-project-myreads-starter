@@ -1,8 +1,8 @@
 import React from 'react'
 import Book from './Book'
+import PropTypes from 'prop-types'
 
-function BookShelf(props) {
-
+const BookShelf = (props) => {
     const books = props.books
     const category = props.category
     const categoryName = props.categoryName
@@ -18,9 +18,9 @@ function BookShelf(props) {
                         .filter(book => book.shelf === category)
                         .map(book => (
                             <Book
-                            onUpdateBook={props.onUpdateBook}
-                            key={book.id}
-                            book={book}/>
+                                key={book.id}
+                                onUpdateBook={props.onUpdateBook}
+                                book={book}/>
                             ))
                     }
                 </ol>
@@ -28,5 +28,12 @@ function BookShelf(props) {
             </div>
         </div>
     );
+}
+
+BookShelf.propTypes = {
+  books: PropTypes.array.isRequired,
+  onUpdateBook: PropTypes.func.isRequired,
+  category: PropTypes.string.isRequired,
+  categoryName: PropTypes.string.isRequired
 }
 export default BookShelf

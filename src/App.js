@@ -39,7 +39,6 @@ class BooksApp extends React.Component {
         )}/>
         <Route exact path="/search" render={() => (
             <SearchBookList
-              onQuery={this.queryForBooks}
               onUpdateBook={this.onUpdateBook}
               myBooks={this.state.books}
               />
