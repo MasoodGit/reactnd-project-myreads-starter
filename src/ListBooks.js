@@ -1,15 +1,11 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {Link} from 'react-router-dom'
-import Book from './Book'
+import BookShelf from './BookShelf.component'
 
-class ListBooks extends Component {
-
-
-  render() {
-
-    const books = this.props.books
+function ListBooks (props) {
     const categories = ["currentlyReading", "wantToRead", "read"]
     const categoryNames = ["Currently Reading", "Want To Read", "Read"]
+
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -20,25 +16,10 @@ class ListBooks extends Component {
             return (
               <div key={index}>
                 <div className="list-books-content">
-                  <div>
-                    <div className="bookshelf">
-                      <h2 className="bookshelf-title">{categoryNames[index]}</h2>
-                      <div className="bookshelf-books">
-                        <ol className="books-grid">
-                          {
-                            books
-                                .filter(book => book.shelf === category)
-                                .map(book => (
-                                  <Book
-                                    onUpdateBook={this.props.onUpdateBook}
-                                    key={book.id}
-                                    book={book}/>
-                                  ))
-                          }
-                        </ol>
-                      </div>
-                    </div>
-                  </div>
+                  <BookShelf onUpdateBook={props.onUpdateBook}
+                             category={category}
+                             categoryName={categoryNames[index]}
+                             books={props.books}/>
                 </div>
                 <div className="open-search">
                   <Link to="/search" >Search</Link>
@@ -46,11 +27,9 @@ class ListBooks extends Component {
               </div>
             )
           })
-                    }
+        }
       </div>
-      ) //end of return statement
-  } //end of render ()
-
-}
+    ) //end of return statement
+} //end of function
 
 export default ListBooks
